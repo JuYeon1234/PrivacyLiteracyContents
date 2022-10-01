@@ -57,11 +57,6 @@ const server = app.listen(port,()=> {
     console.log('서버가 실행되었습니다.');
 })
 
-app.get('/receive_python', (req, res) => {
-    const test1 = req.query.data;
-    console.log(test1);
-    res.send("받았습니다.");
-})
 
 
 
@@ -70,7 +65,6 @@ app.get('/receive_python', (req, res) => {
 
 app.get('/receive_python', async (req, res) => {
 
-    // * ===== DB 연결 ===== * //
     const mysql = require('mysql2/promise');
     const connection = await mysql.createConnection({
             host: '34.64.161.186',
@@ -79,7 +73,7 @@ app.get('/receive_python', async (req, res) => {
             database: 'juyeon'
         });
 
-        
+
     try{
         await connection.connect();
     } catch(error){
@@ -88,11 +82,7 @@ app.get('/receive_python', async (req, res) => {
 
     const test1 = req.query.data;
     console.log(test1);
+    await connection.query(`insert into student(teacher_Id, std_no, day1_pt, day2_pt,day3_pt, day4_pt, day5_pt, total, security_point) values('123','20202', 'pass','pass','pass','pass','pass', 'pass' , 100)`)
     res.send("받았습니다.");
-    try {
-        await connection.query(`insert into teacher(teacher_Id, class_no, pw) values('${teacher_Id}',${class_no}, '${pw}')`)
-        res.send('true')
-    }catch(error){
-        res.send('false')
-    }
+   
 })
