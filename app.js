@@ -67,6 +67,15 @@ app.get('/receive_python', async (req, res) => {
     }
 })
 
+app.get('/student_point_table',(req, res)=>{
+    res.render('student_point_table')
+});
+
+app.get('/student_point_table',async(req, res)=>{
+        r = await connection.query('select * from student');
+        console.log(r);
+});
+
 // * ===== app listen ===== * //
 const server = app.listen(port,()=> {
     console.log('서버가 실행되었습니다.');
