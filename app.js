@@ -80,9 +80,12 @@ app.get('/receive_python', async (req, res) => {
         console.log(error)
     }
 
-    const test1 = req.query.data;
-    console.log(test1);
-    await connection.query(`insert into student(teacher_Id, std_no, day1_pt, day2_pt,day3_pt, day4_pt, day5_pt, total, security_point) values('123','20202', 'pass','pass','pass','pass','pass', 'pass' , 100)`)
+    const data = req.query.data;
+    console.log(data);
+    datas = data.split(',');
+    console.log(datas);
+    //await connection.query(`insert into student(teacher_Id, std_no, day1_pt, day2_pt, day3_pt, day4_pt, day5_pt, total, security_point) values('${datas[0]}', '${datas[1]}','${datas[2]}','${datas[3]}','${datas[4]}','${datas[5]}','${datas[6]}','${datas[7]}','${datas[9]}', ${datas[1]})')
+    await connection.query(`insert into student(teacher_Id, std_no, day1_pt, day2_pt, day3_pt, day4_pt, day5_pt, total, security_point) values('${datas[0]}','${datas[1]}', '${datas[2]}','${datas[3]}','${datas[4]}','${datas[5]}', '${datas[6]}','${datas[7]}', ${datas[8]})`)
     res.send("받았습니다.");
    
 })
