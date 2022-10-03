@@ -90,7 +90,7 @@ app.get('/select_student',async(req, res)=>{
             const rows = (await connection.query(sql))[0];
             console.log(rows);
             if(rows.length === 0 ){
-                res.send('<h1>실패했지롱</h1>')
+                res.send('<h1>ID 또는 비밀번호를 확인해주세요.</h1>')
             } else {
                 res.render('student_list',{rows: rows});
 
