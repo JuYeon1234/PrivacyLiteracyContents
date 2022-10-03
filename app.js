@@ -77,13 +77,24 @@ app.get('/select_student',async(req, res)=>{
         //r = await connection.query('select * from student');
         console.log(chk_id);
         console.log(chk_pw);
-        var sql = "select * from student where teacher_Id = " + String(chk_id);
+        const sql = `
+            select * from student
+            where teacher_Id = (
+                    select teacher_Id from teacher where teacher_Id = "${chk_id}" and pw = "${chk_pw}"
+                )
+        `
+
+        console.log(sql)
         //const r = await connection.query('select pw from teacher where  ')
         try {
             const rows = (await connection.query(sql))[0];
             console.log(rows);
-             res.render('student_list',{rows: rows});
-            
+            if(rows.length === 0 ){
+                res.send('<h1>실패했지롱</h1>')
+            } else {
+                res.render('student_list',{rows: rows});
+
+            }
         } catch(error){
             res.send('false')
         }
