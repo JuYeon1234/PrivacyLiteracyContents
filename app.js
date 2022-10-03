@@ -81,8 +81,8 @@ app.get('/select_student',async(req, res)=>{
         //const r = await connection.query('select pw from teacher where  ')
         try {
             const rows = await connection.query(sql);
-            console.log(rows);
-            await res.render('student_list',{async: true});
+            // console.log(rows);
+             res.render('student_list',{rows: rows});
             
         } catch(error){
             res.send('false')
