@@ -80,8 +80,8 @@ app.get('/select_student',async(req, res)=>{
         var sql = "select * from student where teacher_Id = " + String(chk_id);
         //const r = await connection.query('select pw from teacher where  ')
         try {
-            const rows = await connection.query(sql);
-            // console.log(rows);
+            const rows = (await connection.query(sql))[0];
+            console.log(rows);
              res.render('student_list',{rows: rows});
             
         } catch(error){

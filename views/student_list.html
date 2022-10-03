@@ -12,7 +12,7 @@
             <th>개인정보 안전 점수</th>
         </tr>
         <% for(var i=0; i < rows.length; i++) { %>
-        <%  var data = rows[i].toString(); console.log(data, Object.keys(data));   %>
+        <%  var data = rows[i];    %>
             <tr>
                 <td><%=data.std_no || 1%></td>
                 <td><%=data.day1_pt%></td>
