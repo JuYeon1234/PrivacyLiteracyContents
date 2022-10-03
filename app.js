@@ -71,9 +71,22 @@ app.get('/student_point_table',(req, res)=>{
     res.render('student_point_table')
 });
 
-app.get('/student_point_table',async(req, res)=>{
-        r = await connection.query('select * from student');
-        console.log(r);
+app.get('/select_student',async(req, res)=>{
+        const chk_id = req.query.t_id;
+        const chk_pw = req.query.pw;
+        //r = await connection.query('select * from student');
+        console.log(chk_id);
+        console.log(chk_pw);
+        var sql = "select * from student where teacher_Id = " + String(chk_id);
+        //const r = await connection.query('select pw from teacher where  ')
+        try {
+            const rows = await connection.query(sql);
+            console.log(rows);
+            await res.render('student_list',{async: true});
+            
+        } catch(error){
+            res.send('false')
+        }
 });
 
 // * ===== app listen ===== * //
