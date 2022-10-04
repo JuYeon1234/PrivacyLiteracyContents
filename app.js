@@ -4,6 +4,8 @@ const app = express();
 const port = 8080;
 const mysql = require('mysql2/promise');
 let connection;
+
+app.use(express.static("views"));
 const mysqlConnectionSet = (async()=>{
     try{
         // db config set
@@ -41,10 +43,10 @@ app.get('/insert', async (req, res) => {
     const class_no = req.query.class_no;
     let pw = req.query.pw;
     try {
-       await connection.query(`insert into teacher(teacher_Id, class_no, pw) values('${teacher_Id}',${class_no}, '${pw}')`)
-        res.send('true')
+        await connection.query(`insert into teacher(teacher_Id, class_no, pw) values('${teacher_Id}',${class_no}, '${pw}')`)
+        res.send('계정이 생성되었습니다.')
     }catch(error){
-        res.send('false')
+        res.send('정보가 잘못되었습니다. 다른 정보를 입력해주세요.')
     }
 })
 
@@ -66,6 +68,39 @@ app.get('/receive_python', async (req, res) => {
         res.send('실패했습니다.')
     }
 })
+
+app.get('/student_point_table',(req, res)=>{
+    res.render('student_point_table')
+});
+
+app.get('/select_student',async(req, res)=>{
+        const chk_id = req.query.t_id;
+        const chk_pw = req.query.pw;
+        //r = await connection.query('select * from student');
+        console.log(chk_id);
+        console.log(chk_pw);
+        const sql = `
+            select * from student
+            where teacher_Id = (
+                    select teacher_Id from teacher where teacher_Id = "${chk_id}" and pw = "${chk_pw}"
+                )
+        `
+
+        console.log(sql)
+        //const r = await connection.query('select pw from teacher where  ')
+        try {
+            const rows = (await connection.query(sql))[0];
+            console.log(rows);
+            if(rows.length === 0 ){
+                res.send('<h1>ID 또는 비밀번호를 확인해주세요.</h1>')
+            } else {
+                res.render('student_list',{rows: rows});
+
+            }
+        } catch(error){
+            res.send('false')
+        }
+});
 
 // * ===== app listen ===== * //
 const server = app.listen(port,()=> {
