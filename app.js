@@ -254,7 +254,7 @@ function appSet(){
                 }
 
                 // * 해당 선생님 반의 학생 정보 출력
-                const studentList = student.filter((per) => {
+                studentList = student.filter((per) => {
                     if(per.teacher_Id === chk_id){
                         return true
                     } else {
@@ -268,6 +268,7 @@ function appSet(){
                 res.send('<h1>ID 또는 비밀번호를 확인해주세요.</h1>')
             }
 
+            console.log(studentList)
             res.render('student_list',{rows: studentList});
 
         } catch(error){
@@ -281,8 +282,8 @@ function appSet(){
     })
 
     // * ===== app 종료  ===== * //
-    const exitFunction = async () => {
-        await connection.end();
+    const exitFunction = () => {
+        // await connection.end();
         server.close()
         process.exit()
     }
