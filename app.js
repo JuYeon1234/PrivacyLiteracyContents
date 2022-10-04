@@ -4,6 +4,8 @@ const app = express();
 const port = 8080;
 const mysql = require('mysql2/promise');
 let connection;
+
+app.use(express.static("views"));
 const mysqlConnectionSet = (async()=>{
     try{
         // db config set
@@ -42,9 +44,9 @@ app.get('/insert', async (req, res) => {
     let pw = req.query.pw;
     try {
         await connection.query(`insert into teacher(teacher_Id, class_no, pw) values('${teacher_Id}',${class_no}, '${pw}')`)
-        res.send('true')
+        res.send('계정이 생성되었습니다.')
     }catch(error){
-        res.send('false')
+        res.send('정보가 잘못되었습니다. 다른 정보를 입력해주세요.')
     }
 })
 
