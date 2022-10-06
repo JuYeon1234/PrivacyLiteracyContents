@@ -154,8 +154,25 @@ function appSet(){
         const datas = data.split(',');
         console.log(datas);
         try {
-            await connection.query(`insert into student(teacher_Id, std_no, day1_pt, day2_pt, day3_pt, day4_pt, day5_pt, total, security_point) values('${datas[0]}','${datas[1]}', '${datas[2]}','${datas[3]}','${datas[4]}','${datas[5]}', '${datas[6]}','${datas[7]}', ${datas[8]})`)
+            // 복합키 만들어서 upsert 진행: (ALTER TABLE student ADD PRIMARY KEY(teacher_Id, std_no);)
+            const result = await connection.query(`
+                insert into
+                    student(teacher_Id, std_no, day1_pt, day2_pt, day3_pt, day4_pt, day5_pt, total, security_point)
+                values
+                            ('${datas[0]}','${datas[1]}', '${datas[2]}','${datas[3]}','${datas[4]}','${datas[5]}', '${datas[6]}','${datas[7]}', ${datas[8]})
+                ON DUPLICATE KEY UPDATE 
+                    teacher_Id = '${datas[0]}',
+                    std_no = '${datas[1]}',
+                    day1_pt = '${datas[2]}',
+                    day2_pt = '${datas[3]}',
+                    day3_pt = '${datas[4]}',
+                    day4_pt = '${datas[5]}',
+                    day5_pt = '${datas[6]}',
+                    total = '${datas[7]}',
+                    security_point = ${datas[8]}
+            `)
 
+            console.log(result)
             // const teacher_Id = datas[0]
             // const std_no = datas[1]
 
