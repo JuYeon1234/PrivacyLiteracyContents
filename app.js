@@ -78,23 +78,23 @@ const student = [{
 
 function appSet(){
     app.use(express.static("views"));
-    // const mysqlConnectionSet = (async()=>{
-    //     try{
-    //         // db config set
-    //         connection = await mysql.createConnection({
-    //             host: '34.64.161.186',
-    //             user: 'root',
-    //             password: '1234',
-    //             database: 'juyeon'
-    //         });
-    //
-    //         // db connect
-    //         await connection.connect();
-    //
-    //     } catch(error){
-    //         console.log(error)
-    //     }
-    // })()
+    const mysqlConnectionSet = (async()=>{
+        try{
+            // db config set
+            connection = await mysql.createConnection({
+                host: '34.64.161.186',
+                user: 'root',
+                password: '1234',
+                database: 'juyeon'
+            });
+    
+            // db connect
+            await connection.connect();
+    
+        } catch(error){
+            console.log(error)
+        }
+    })()
 
     // * ===== html 렌더링 ===== * //
     app.engine('html', require('ejs').renderFile)
@@ -115,26 +115,26 @@ function appSet(){
         const class_no = req.query.class_no;
         let pw = req.query.pw;
         try {
-            // await connection.query(`insert into teacher(teacher_Id, class_no, pw) values('${teacher_Id}',${class_no}, '${pw}')`)
-            const teacherIdList = teacher.map(per => per.teacher_Id);
-            let duplicatedFlag = true
-            for(const perTeacherId of teacherIdList){
-                if(perTeacherId === teacher_Id){
-                    duplicatedFlag = false
-                }
-            }
+             await connection.query(`insert into teacher(teacher_Id, class_no, pw) values('${teacher_Id}',${class_no}, '${pw}')`)
+            // const teacherIdList = teacher.map(per => per.teacher_Id);
+            // let duplicatedFlag = true
+            // for(const perTeacherId of teacherIdList){
+            //     if(perTeacherId === teacher_Id){
+            //         duplicatedFlag = false
+            //     }
+            // }
 
-            if(duplicatedFlag === false){
-                console.log('id 중복된 경우')
-                throw new Error()
-            }
+            // if(duplicatedFlag === false){
+            //     console.log('id 중복된 경우')
+            //     throw new Error()
+            // }
 
-            // 데이터 넣기
-            teacher.push({
-                teacher_Id,
-                class_no,
-                pw,
-            })
+            // // 데이터 넣기
+            // teacher.push({
+            //     teacher_Id,
+            //     class_no,
+            //     pw,
+            // })
 
             res.send('계정이 생성되었습니다.')
         }catch(error){
@@ -154,47 +154,47 @@ function appSet(){
         const datas = data.split(',');
         console.log(datas);
         try {
-            // await connection.query(`insert into student(teacher_Id, std_no, day1_pt, day2_pt, day3_pt, day4_pt, day5_pt, total, security_point) values('${datas[0]}','${datas[1]}', '${datas[2]}','${datas[3]}','${datas[4]}','${datas[5]}', '${datas[6]}','${datas[7]}', ${datas[8]})`)
+            await connection.query(`insert into student(teacher_Id, std_no, day1_pt, day2_pt, day3_pt, day4_pt, day5_pt, total, security_point) values('${datas[0]}','${datas[1]}', '${datas[2]}','${datas[3]}','${datas[4]}','${datas[5]}', '${datas[6]}','${datas[7]}', ${datas[8]})`)
 
-            const teacher_Id = datas[0]
-            const std_no = datas[1]
+            // const teacher_Id = datas[0]
+            // const std_no = datas[1]
 
-            const teacherIdAndStdNoList = student.map(per => {
-                return {old_teacher_Id: per.teacher_Id, old_std_no: per.std_no}
-            })
+            // const teacherIdAndStdNoList = student.map(per => {
+            //     return {old_teacher_Id: per.teacher_Id, old_std_no: per.std_no}
+            // })
 
-            let insertFlag = false
-            for(const [index, {old_teacher_Id, old_std_no}] of teacherIdAndStdNoList.entries()){
-                if(old_teacher_Id === teacher_Id && old_std_no === std_no){
-                    student[index] = {
-                        teacher_Id:datas[0],
-                        std_no:datas[1],
-                        day1_pt:datas[2],
-                        day2_pt:datas[3],
-                        day3_pt:datas[4],
-                        day4_pt:datas[5],
-                        day5_pt:datas[6],
-                        total:datas[7],
-                        security_point:datas[8]
-                    }
-                    insertFlag = true
-                    break;
-                }
-            }
+            // let insertFlag = false
+            // for(const [index, {old_teacher_Id, old_std_no}] of teacherIdAndStdNoList.entries()){
+            //     if(old_teacher_Id === teacher_Id && old_std_no === std_no){
+            //         student[index] = {
+            //             teacher_Id:datas[0],
+            //             std_no:datas[1],
+            //             day1_pt:datas[2],
+            //             day2_pt:datas[3],
+            //             day3_pt:datas[4],
+            //             day4_pt:datas[5],
+            //             day5_pt:datas[6],
+            //             total:datas[7],
+            //             security_point:datas[8]
+            //         }
+            //         insertFlag = true
+            //         break;
+            //     }
+            // }
 
-            if(insertFlag === false){
-                student.push({
-                    teacher_Id:datas[0],
-                    std_no:datas[1],
-                    day1_pt:datas[2],
-                    day2_pt:datas[3],
-                    day3_pt:datas[4],
-                    day4_pt:datas[5],
-                    day5_pt:datas[6],
-                    total:datas[7],
-                    security_point:datas[8]
-                })
-            }
+            // if(insertFlag === false){
+            //     student.push({
+            //         teacher_Id:datas[0],
+            //         std_no:datas[1],
+            //         day1_pt:datas[2],
+            //         day2_pt:datas[3],
+            //         day3_pt:datas[4],
+            //         day4_pt:datas[5],
+            //         day5_pt:datas[6],
+            //         total:datas[7],
+            //         security_point:datas[8]
+            //     })
+            // }
 
 
             res.send("받았습니다.");
@@ -213,63 +213,64 @@ function appSet(){
         //r = await connection.query('select * from student');
         console.log(chk_id);
         console.log(chk_pw);
-        // const sql = `
-        //     select * from student
-        //     where teacher_Id = (
-        //             select teacher_Id from teacher where teacher_Id = "${chk_id}" and pw = "${chk_pw}"
-        //         )
-        // `
+        const sql = `
+            select * from student
+            where teacher_Id = (
+                    select teacher_Id from teacher where teacher_Id = "${chk_id}" and pw = "${chk_pw}"
+                )
+        `
 
         // console.log(sql)
         //const r = await connection.query('select pw from teacher where  ')
         try {
-            // const rows = (await connection.query(sql))[0];
-            // console.log(rows);
-            // if(rows.length === 0 ){
-            //     res.send('<h1>ID 또는 비밀번호를 확인해주세요.</h1>')
+            const rows = (await connection.query(sql))[0];
+            console.log(rows);
+            if(rows.length === 0 ){
+                res.send('<h1>ID 또는 비밀번호를 확인해주세요.</h1>')
+            } else {
+                res.render('student_list',{rows: rows});
+            
+            }
+
+            // let studentList;
+            // // * 선생님 정보 확인
+            // let chkFlag = false
+            // // 관리자인 경우
+            // if(chk_id === "maincharacter"){
+            //     if(chk_pw === "maincharacter"){
+            //         studentList = student
+            //         chkFlag = true
+            //     }
             // } else {
-            //     res.render('student_list',{rows: rows});
-            //
+
+            //     teacher.forEach(per => {
+            //         if(per.teacher_Id === chk_id && per.pw === chk_pw){
+            //             chkFlag = true
+            //         }
+            //     })
+
+            //     if(chkFlag === false){
+            //         res.send('<h1>ID 또는 비밀번호를 확인해주세요.</h1>')
+            //     }
+
+            //     // * 해당 선생님 반의 학생 정보 출력
+            //     studentList = student.filter((per) => {
+            //         if(per.teacher_Id === chk_id){
+            //             return true
+            //         } else {
+            //             return false
+            //         }
+            //     })
             // }
 
-            let studentList;
-            // * 선생님 정보 확인
-            let chkFlag = false
-            // 관리자인 경우
-            if(chk_id === "maincharacter"){
-                if(chk_pw === "maincharacter"){
-                    studentList = student
-                    chkFlag = true
-                }
-            } else {
 
-                teacher.forEach(per => {
-                    if(per.teacher_Id === chk_id && per.pw === chk_pw){
-                        chkFlag = true
-                    }
-                })
+            // if(chkFlag === false){
+            //     res.send('<h1>ID 또는 비밀번호를 확인해주세요.</h1>')
+            // }
 
-                if(chkFlag === false){
-                    res.send('<h1>ID 또는 비밀번호를 확인해주세요.</h1>')
-                }
+            //console.log(studentList)
 
-                // * 해당 선생님 반의 학생 정보 출력
-                studentList = student.filter((per) => {
-                    if(per.teacher_Id === chk_id){
-                        return true
-                    } else {
-                        return false
-                    }
-                })
-            }
-
-
-            if(chkFlag === false){
-                res.send('<h1>ID 또는 비밀번호를 확인해주세요.</h1>')
-            }
-
-            console.log(studentList)
-            res.render('student_list',{rows: studentList});
+            //res.render('student_list',{rows: studentList});
 
         } catch(error){
             res.send('false')
