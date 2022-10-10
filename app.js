@@ -90,11 +90,20 @@ function appSet(){
     
             // db connect
             await connection.connect();
-    
+
+            // ping query
+            setInterval(function () {
+                connection.query('SELECT 1');
+            }, 5000);
+
         } catch(error){
             console.log(error)
         }
     })()
+    
+   
+
+
 
     // * ===== html 렌더링 ===== * //
     app.engine('html', require('ejs').renderFile)
