@@ -101,7 +101,19 @@ const student = [{
     //     }
     // })()
 
-   
+    // ping query
+    setInterval(async ()=>{
+        connection = await mysql.createConnection({
+        host: '34.64.161.186',
+        user: 'root',
+        password: '1234',
+        database: 'juyeon'
+        });
+        await connection.connect();
+        connection.query('select 1');
+        connection.close();
+        console.log("ping");
+   }, 5000);
 
 
 
