@@ -101,19 +101,20 @@ const student = [{
     //     }
     // })()
 
+    
     // ping query
-    setInterval(async ()=>{
-        connection = await mysql.createConnection({
-        host: '34.64.244.182',
-        user: 'root',
-        password: '1234',
-        database: 'juyeon'
-        });
-        await connection.connect();
-        connection.query('select 1');
-        connection.close();
-        console.log("ping");
-   }, 5000);
+    //setInterval(async ()=>{
+    //    connection = await mysql.createConnection({
+    //  host: '34.64.244.182',
+    //    user: 'root',
+    //    password: '1234',
+    //    database: 'juyeon'
+    //    });
+    //    await connection.connect();
+    //    connection.query('select 1');
+    //    connection.close();
+    //    console.log("ping");
+   //}, 5000);
 
 
 
