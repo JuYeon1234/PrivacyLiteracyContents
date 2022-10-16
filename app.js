@@ -104,7 +104,7 @@ const student = [{
     // ping query
     setInterval(async ()=>{
         connection = await mysql.createConnection({
-        host: '34.64.161.186',
+        host: '34.64.244.182',
         user: 'root',
         password: '1234',
         database: 'juyeon'
@@ -178,7 +178,7 @@ const student = [{
             try{
                 // db config set
                 connection = await mysql.createConnection({
-                    host: '34.64.161.186',
+                    host: '34.64.244.182',
                     user: 'root',
                     password: '1234',
                     database: 'juyeon'
@@ -292,7 +292,7 @@ const student = [{
                 try{
                     // db config set
                     connection = await mysql.createConnection({
-                        host: '34.64.161.186',
+                        host: '34.64.244.182',
                         user: 'root',
                         password: '1234',
                         database: 'juyeon'
@@ -352,7 +352,7 @@ const student = [{
         try{
             // db config set
             connection = await mysql.createConnection({
-                host: '34.64.161.186',
+                host: '34.64.244.182',
                 user: 'root',
                 password: '1234',
                 database: 'juyeon'
@@ -467,6 +467,7 @@ const student = [{
     //do something when app is closing
     process.on('exit', async()=>{
         console.log('process.close')
+        console.log(error);
         await exitFunction()
     })
     //catches ctrl+c event
