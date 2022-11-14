@@ -194,12 +194,12 @@ const student = [{
 
             } catch(error){
                 console.log(error)
-                res.send('정보가 잘못되었습니다. 다른 정보를 입력해주세요.')
-
+                res.send('ID가 중복되었습니다. 다른 ID를 입력해주세요. \n5초뒤 교실생성 화면으로 이동합니다.')
             }
         })()
 
     })
+
 
     app.get('/createclass',(req, res)=>{
         res.render('createclass')
