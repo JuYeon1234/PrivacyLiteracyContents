@@ -190,26 +190,44 @@ const student = [{
                 await connection.query(`insert into teacher(teacher_Id, class_no, pw) values('${teacher_Id}',${class_no}, '${pw}')`)
                 console.log("보냄");
                 connection.close()
+                res.send(`
+                <script>
+                    function go_index(){
+                        location.href="index.html";
+                    }
+
+                    setTimeout(go_index, 5000)
+                </script>
+                <h1>계정이 생성되었습니다.</h1>
+                <h2>5초후 홈페이지로 이동합니다.</h2>
+                `)
                 //res.send('계정이 생성되었습니다.')
-                app.get('/insert',(req, res)=>{
-                    console.log("insert")
-                    res.render('insert')
-                });
+               console.log("make class")
             } catch(error){
                 console.log(error)
-                //res.send('ID가 중복되었습니다. 다른 ID를 입력해주세요. \n5초뒤 교실생성 화면으로 이동합니다.')
+                res.send(`
+                        <script>
+                        function go_createclass(){
+                            location.href="createclass.html";
+                        }
+                        setTimeout(go_createclass, 5000)
                 
-                app.get('/duplicate',(req, res)=>{
-                    console.log("duplicate")
-                    res.render('duplicate')
-                });
+            
+                        </script>
+                    <h1>ID가 중복되었습니다. 다른 ID를 입력해주세요.</h1>
+                    <h2>5초후 교실생성 화면으로 이동합니다.</h2>
+                `)
+                console.log("id duplicate")
+
             }
-        })()
+        })()    
+
 
     })
 
 
     app.get('/createclass',(req, res)=>{
+
         res.render('createclass')
     });
 
